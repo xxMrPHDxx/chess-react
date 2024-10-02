@@ -1,0 +1,133 @@
+.playground {
+  display: grid;
+  grid-template-columns: 20px 1fr 20px;
+}
+
+.left-panel,
+.right-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.left-panel img,
+.right-panel img {
+  height: 16px;
+  margin: 4px auto;
+}
+
+.chess-board {
+  user-select: none;
+  position: relative;
+  width: 600px;
+  height: 600px;
+  background: url('./board.png');
+  background-size: cover;
+}
+
+.chess-board .tiles {
+  position: absolute;
+  top: 53px;
+  left: 50px;
+  display: grid;
+  grid-template-columns: repeat(8, 63px);
+  grid-template-rows: repeat(8, 63px);
+}
+
+.chess-board .tile {
+  position: relative;
+}
+
+.tile.normal-move::after,
+.tile.attack-move::after {
+  content: "";
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+.tile.normal-move::after {
+  background-color: #00ff00ff;
+}
+
+.tile.attack-move::after {
+  background-color: #ff0000ff;
+}
+
+.tile.in-check::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 2px dashed red;
+  border-radius: 10px;
+}
+
+.tile.in-checkmate::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 2px solid red;
+  border-radius: 10px;
+  background-color: #f003;
+}
+
+.tile.in-stalemate::before,
+.tile.in-stalemate::after {
+  content: "";
+  position: absolute;
+  height: 50px;
+  top: 50%;
+  left: 50%;
+  border: 1px solid red;
+  z-index: 2;
+}
+
+.tile.in-stalemate::before {
+  transform: translate(-50%, -50%) rotate(45deg);
+}
+
+.tile.in-stalemate::after {
+  transform: translate(-50%, -50%) rotate(-45deg);
+}
+
+.tile.castling-move::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 50%;
+  height: 50%;
+  background: url('./castling.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  filter: brightness(100%) contrast(100%) hue-rotate(360deg);
+  animation: rotate linear infinite 3s;
+}
+
+@keyframes rotate {
+  0% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+
+  50% {
+    transform: translate(-50%, -50%) rotate(180deg);
+  }
+
+  100% {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+}
+
+.tile img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  object-fit: contain;
+  height: 36px;
+}
